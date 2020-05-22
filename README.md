@@ -32,6 +32,7 @@ sudo docker-compose up
 * ```/tools/1 -> utilizando o método GET nessa rota irá listar a ferramenta de acordo com o id que foi informado```
 * ```/tools/1 -> utilizando o método PUT nessa rota irá alterar uma ferramenta de acordo com o id que foi informado```
 * ```/tools/1 -> utilizando o método DELETE nessa rota irá excluir a ferramenta de acordo com o id que foi informado```
+
 Para mais informçoes de como utilizar essas rotas e quais parâmetros utilizar, tem a documentação da API, que se encontra dentro da pasta do projeto, no arquivo de **api.apib**
 
 ### Tecnologias utilizadas na aplicação
