@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  app:
+    container_name: nodejs
+    build: .
+    volumes:
+      - ./:/app
+    depends_on:
+      - db-postgres
+    links:
+      - db-postgres
+    networks:
+      - app-connect
+    ports:
+      - '3000:3000'
+
+  db-postgres:
+    container_name: postgres
+    image: postgres:12.1
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - db-postgres-data:/data
+    environment:
+      POSTGRES_DB: vuttr
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgre
+    networks:
+      - app-connect
+
+volumes:
+  db-postgres-data:
+
+networks:
+  app-connect:
+      driver: bridge

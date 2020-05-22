@@ -1,0 +1,298 @@
+FORMAT: 1A
+HOST: http://localhost:3000
+
+# VUTTR (Very Useful Tools to Remember)
+A aplicação é um simples repositório para gerenciar ferramentas com seus respectivos nomes, links, descrições e tags.
+
+# Group Usuários
+
+## Usuários [/users]
+
+### Criar usuário [POST]
++ password (string): No mínimo seis dígitos
++ password_confirmation (string): Repetir o mesmo que inseriu em password
+
++ Request (application/json)
+
+        {
+            "name":"Pedro",
+            "email":"pedro@gmail.com",
+            "password":"123456"
+        }
+
++ Response 201
+    + Body
+
+            {
+                "id":1,
+                "name":"Pedro",
+                "email":"pedro@gmail.com"
+            }
+
++ Response 400
+
+    + Body
+
+            {
+                "error": "Mensagem de erro"
+            }
+
+### Atualizar usuário [PUT]
++ oldPassword (string): No mínimo seis dígitos
++ password (string): No mínimo seis dígitos
++ password_confirmation (string): Repetir o mesmo que inseriu em password
+
+    + Headers
+
+        authorization: Bearer <código de autorização>
+
++ Request (application/json)
+
+        {
+            "name":"Pedro",
+            "email":"pedro@gmail.com",
+            "oldPassword":"123456",
+            "password":"1234567",
+            "passpassword_confirmationord":"1234567",
+        }
+
++ Response 201
+    + Body
+
+            {
+                "id":1,
+                "name":"Pedro",
+                "email":"pedro@gmail.com"
+            }
+
++ Response 400
+
+    + Body
+
+            {
+                "error": "Mensagem de erro"
+            }
+
+
+# Group Sessão
+
+## Sessão [/sessions]
+
+### Criar sessão [POST]
++ Request (application/json)
+
+        {
+            "email":"jfrancodardengo@gmail.com",
+            "password":"123456"
+        }
+
++ Response 201
+    + Body
+
+            {
+                "user": {
+                    "id": 1,
+                    "name":"Pedro",
+                    "email":"pedro@gmail.com",
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg2MjcwNDIzLCJleHAiOjE1ODY4NzUyMjN9.qwpXmLmPf5ecjaeVuvU5AqDj-zhL2yWGN16xwWSO3Zc"
+            }
+
++ Response 401
+
+    + Body
+
+            {
+                "error": "Mensagem de erro"
+            }
+
+# Group Ferramentas
+
+## Ferramentas [/tools{?tag}]
+Realiza uma busca de ferramentas pela tag, usando da seguinte forma: /tools?tag=node
++ Parameters
+    + tag (string) - Filtra as ferramentas pela tag
+
+## Ferramentas [/tools{?q}]
+Realiza uma busca de ferramentas tanto pela title, link ou description, usando da seguinte forma: /tools?q=notion
+
++ Parameters
+    + q (string) - Filtra as ferramentas pela busca geral
+
+### Listar todas as ferramentas [GET]
+    + Headers
+
+                authorization: Bearer <código de autorização>
+
+
++ Response 200
+
+        [
+                {
+                    id: 1, // ou qualquer outro identificador
+                    title: "Notion",
+                    link: "https://notion.so",
+                    description: "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ",
+                    tags: [
+                        "organization",
+                        "planning",
+                        "collaboration",
+                        "writing",
+                        "calendar"
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "json-server",
+                    link: "https://github.com/typicode/json-server",
+                    description: "Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.",
+                    tags: [
+                        "api",
+                        "json",
+                        "schema",
+                        "node",
+                        "github",
+                        "rest"
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "fastify",
+                    link: "https://www.fastify.io/",
+                    description: "Extremely fast and simple, low-overhead web framework for NodeJS. Supports HTTP2.",
+                    tags: [
+                        "web",
+                        "framework",
+                        "node",
+                        "http2",
+                        "https",
+                        "localhost"
+                    ]
+                }
+        ]
+
+### Criar ferramenta [POST]
++ tags (array[string]) - Coleção de tags
+
+    + Headers
+
+                authorization: Bearer <código de autorização>
+
+
++ Request (application/json)
+
+        {
+            "title": "Fastify",
+            "link": "https://www.fastify.io/",
+            "description": "Extremely fast and simple, low-overhead web framework for NodeJS. Supports HTTP2.",
+            "tags": [
+                        "web",
+                        "framework",
+                        "node",
+                        "http2",
+                        "https",
+                        "localhost"
+                    ]
+        }
+
++ Response 201
+    + Body
+
+            {
+                "id": 7,
+                "title": "Fastify",
+                "link": "https://www.fastify.io/",
+                "description": "Extremely fast and simple, low-overhead web framework for NodeJS. Supports HTTP2.",
+                "tags": [
+                    "web",
+                    "framework",
+                    "node",
+                    "http2",
+                    "https",
+                    "localhost"
+                ]
+            }
+
++ Response 400
+    + Body
+
+            {
+                "error": "Mensagem de erro"
+            }
+
+## Ferramenta [/tools/{id}]
+Realiza operações de busca de uma ferramenta de acordo com o id utilizado na url. Ex: /tools/1
+
++ Parameters
+    + id: 1 (number) - Um unico identificador da ferramenta.
+
+### Listar a feramenta [GET]
+    + Headers
+
+                authorization: Bearer <código de autorização>
+
+
++ Response 200
+
+        {
+            "id": 4,
+            "title": "Notion",
+            "link": "https://notion.so",
+            "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized.",
+            "tags": [
+                "organization",
+                "planning",
+                "collaboration",
+                "writing",
+                "calendar"
+            ]
+        }
+
++ Response 400
+
+    + Body
+
+            {
+                "error": "Mensagem de erro"
+            }
+
+### Atualizar a feramenta [PUT]
+    + Headers
+
+            authorization: Bearer <código de autorização>
+
++ Response 200
+
+        {
+            "title": "Notion",
+            "link": "https://notion.so",
+            "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized.",
+            "tags": [
+                "organization",
+                "planning",
+                "collaboration",
+                "writing"
+            ]
+        }
+
++ Response 400
+    + Body
+
+            {
+                "error": "Mensagem de erro"
+            }
+
+
+### Deletar a feramenta [DELETE]
+    + Headers
+
+            authorization: Bearer <código de autorização>
+
++ Response 204
+
++ Response 400
+    + Body
+
+            {
+                "error": "Mensagem de erro"
+            }
