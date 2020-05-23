@@ -23,7 +23,7 @@ sudo docker-compose up
 ## Rotas da aplicação
 * A aplicação executa em http://localhost/3000
 * ```/users -> utilizando o método POST nessa rota criará um usuário ```
-* ```/sessions -> utilizando o método POST nessa rota irá realizar o login na aplicação, de acordo com os usuários cadastrados e terá como resposta um token para ser utilizado nas rotas a seguir ```
+* ```/sessions -> utilizando o método POST nessa rota irá realizar o login na aplicação, de acordo com os usuários cadastrados e terá como resposta um token para ser utilizado OBRIGATORIAMENTE nas rotas a seguir ```
 * ```/users -> utilizando o método PUT nessa rota irá alterar o cadastro do usuário ```
 * ```/tools -> utilizando o método POST nessa rota irá criar uma ferramenta ```
 * ```/tools -> utilizando o método GET nessa rota irá listar todas as ferramentas ```
